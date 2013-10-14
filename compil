@@ -1,0 +1,3 @@
+#!/bin/bash
+
+g++ -w -o build.out code/core.cpp code/view.cpp >> stdout

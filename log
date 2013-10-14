@@ -1,0 +1,326 @@
+INTRO
+Voici la définition de ce qu’on voudrait :
+Choix entre plusieurs véhicules (choix de 3 véhicules prédéfinis ou d’1 4ème véhicule dont on définit les dimensions au moment du calcul
+Paramètres à tenir en compte pour le calcul :
+Dimensions du véhicule
+Poids des colis
+Dimensions des colis
+Possibilité de gerber les colis (en fonction du poids ou de notre choix) et en fonction des dimensions des colis en dessous (notion de colis supérieur « dépassant » le colis inférieur)
+Possibilité de ranger les colis selon une autre dimension (les « retourner »)
+Ordre de chargement et de déchargement.
+
+CHOIX LANGUAGE
+  python ou c++
+    -backtracking
+        -python:plus simple             +
+        -c++:plus compliqué             -
+    -librairie 3D (probablement)
+        -python:?                           -
+        -c++:sûr                            +
+    -structure de données souples   
+        -python:plus souple(et plus lisibles)       +
+        -c++:chargé                                 -
+    -rapiditée
+        -python:moins rapide        -
+        -c++:plus rapide            +
+    -natif
+        -python:non         -
+        -c++:oui            +
+
+->C++
+
+
+Compilation:
+    compiler sous windows quand : (console->gui, 3D, à la fin)
+    compilation linux : -g++ via script (jusqu'à fin du noyaux)
+                        -selon compilateur windows
+
+    compilation windows : -quel pc?
+                          -quel compilateur?
+    
+    Librairies : -wxWidget (linux+windows)
+                 -opengl (linux+windows)
+
+CAHIER DES CHARGES :
+    Remplissage d'une boite englobante par boite pour optimiser volume
+        Partie I Coeur
+            -Boite
+            -Vecteurs
+            -Algorithmes
+                -collision 3D AABB
+                -rotations // axes centrer sur centre géométrique  (swaps de coordonnées)
+                -backtracking
+                -équilibre 3D
+                    -surface de contact
+                -répartition des poids
+            -Taille boite englobante variable
+            -Taille autres boites variable
+            -rotation // x,y,z sur centre de masse si uniformément réparti de (90|180|270)° 
+            -poid
+        Partie II contraintes
+            -dépassement de colis (équilibre statique de 2 boîtes + marge car non-réaliste)
+            -ordre de chargement imposé (division en surface ds / ordre strict de calcul(démarre du fond))
+            -précision(découpage en petites boites / déplacement dx + collision boite alignée (AABB))
+            -peut-ere tournée (dans quel sens)
+            -peut-être gerbée (poid au dessus/en-dessous)
+
+        Partie III Interface-vue
+            -résultat
+                -2D pour test (face&&droite&&dessus)
+                -3D pour final
+            -consultation données
+        Partie IV Interface-controleur
+            -modification données
+            -modification vue
+            -gestion animation
+            -déroulement du programme
+
+ALGORITHME collision AABB 3D:   //repère dans un coin du cube
+    Recevoir en entrée box1 et box2 à tester
+    si box2.x >= box1.x+box1.w
+    ou
+    si box2.x + box2.w <= box1.x
+    ou
+    si box2.y >= box1.y + box1.h            une collision par face
+    ou
+    si box2.y + box2.h <= box1.y
+    ou
+    si box2.z >= box1.z + box1.d
+    ou
+    si box2.z + box2.d <= box1.z
+        
+        Il n'y a pas collision
+    sinnon
+        il y a collision
+
+ALGORITHME rotations//axes (3D):
+    Recevoir en entrée (X|Y|Z, theta)
+    tant que pas theta < 360:
+        theta /= 90
+    si pas theta%90 == 0:
+        theta -= theta%90
+    //0 < theta < 360 && theta%90==0
+    Si Z :      
+        si theta==90 || theta==270
+            échanger dimensions x,y
+    Si Y : 
+        si theta==90 || theta==270
+            échanger dimesions x,z
+    Si X :
+        si theta==90 || theta==270
+            échanger dimesions y,z
+
+ALGORITHME EQUILIBRE:
+    //division de la boite en 3 sections : gauche-masse-droite selon 
+    //l'axe parralèle à sa plus grande longeur|largeur passant par le centre
+    //chaque section fait 33% de la longueur//axe
+    //I : si au-dessus de la section il y a quelque chose, 
+    //      il faut quelque chose en dessous aussi
+    //II : au moins 2 sections doivent avoir quelque chose en dessous
+    //(III) : si centre de masse spécifié, section masse centré dessus
+    //(IV) : masse doit avoir quelque chose en dessous
+    // si I && II (&& III && IV):
+    //      boite en équilibre
+    dans objet espace
+    pour boite demandée
+    pour axe:Largeur ou longueur
+        Box* section1 : 33% de taille(axe) 100% les autres, avant les autres sur axe
+        Box* sectionMass : 33% de taille(axe) 100% les autres, centré sur centre de masse (millieu par défaut)
+        Box* section3 : 33% de taille(axe) 100% les autres, après sectionMass
+        bool topped[section]=false,false,false : la section est en dessous de quelque chose
+        pour chaque section:
+            si(section.bouger(haut, 2cm) -> collision):
+                topped[section]=true
+        bool onTop[section] = false  //section en déséquilibre par défaut
+        pour chaque section:
+            si(section.bouger(bas, 2cm) -> collision):
+                onTop[section]=true
+        //vérification
+        bool retour=true
+        int nbOfOnTop=0 // nombre de section en équilibre
+        pour chaque section et tant que retour
+            retour = retour and ( (topped and onTop) or (not topped and true) )//(I)
+            if(onTop[section])  //(II)
+                nbOfOnTop ++
+        fin pour
+        retour = retour and nbOfOnTop >= 2
+        return retour
+
+
+
+HEURISTIQUE backtracking :
+    Aucun coli n'est écrasé && Touts colis en équilibre && maximum de colis && maximum de colis au contact && maximum de volume au contact && meilleure boite arrière
+
+ALGORITHME backtracking :
+    Recevoir en entrée x boite à agencer
+    Chacune avec contrainte sur véhicule, rotation, hauteur, ordre de chargement
+    Recevoir en entrée y espace de travail
+    Creer liste de solution en construction
+    Creer liste de solution
+    pour toutes solution en construction:
+         pour toutes boites:
+             pour toutes positions:
+                 tester position dans la solution en construction
+                 si heuristique true
+                      copie(boite+position) dans copie(solution en construction)
+                      placer copie(solution en construction) dans la liste de solution en construction
+             si toutes boite dans espace
+                copier solution en construction dans liste construction
+         del solution en construction
+
+complexité:
+    x : boites à agencer
+    y : nb espaces de travail
+    p : precision
+    v(y) : volume espace y
+    c(O) = y*x*(v(y))/precision
+    grosse majorations:
+        x == y² (très petites caisses ou très grand camion)
+        c(O) = y³*(v(y))
+    approximation : 
+        x >> y
+        donc y == x (dans ce sens) majorant
+        c(O) = x²*(v(y))
+        test réaliste : 
+            35 boites
+            1 camion
+            volume : 15m³
+            précision : 1cm
+            c = 35*1*15/0.001 = 525 000 iter
+       
+
+CHOIXS---------------------------------------:
+    -python ou c++ : C++
+    -cross compiling ou portage : ?
+!    -ordre de chargement : section de l'espace ou ordre fixe
+!    -2D indispensable?
+repère
+
+
+STRUCTURES DE DONNEES:
+    PARTIE I+II Core+contraintes
+    Vect2D : struct, vecteur (x,y,z) (uInt,uInt,uInt)
+    Box : class couche abstraite pour boite englobante ou non un objet
+          attr:
+            -uInt id : identifiant de la boite (par rapport à ce qu'elle contient spécial:SpaceToFill=0)
+            -Vect3D dim : dimension(dim//x, dim//y, dim//z)
+            -Vect3D centre : centre de la boite(x,y,z)
+            -uInt weight : poid en grammes
+          méth:
+            -virtual void rotate(X|Y|Z) : effectue une rotation de 90° sur X|Y|Z de la box
+            -virtual bool : collide(Box* one) : renvoie true si les boites sont en collisions(AABB)
+            -static bool : isBoxInside(Box* mayInside, Box* mayOutside) = renvoie true si mayInside dans mayOutside
+            -static bool : isPointInside(vect3D point, Box* thBox)
+            -void move(Vect3D displacement) : déplace la boite des  quantitées indiquées 
+            -uInt getVol() : renvoie le volume (dim.x*dim.y*dim.z)
+            -uInt getWeight() : renvoie le poids
+            -Vect3D* getDim()
+            -Vect3D* getCenter()
+
+    ObjectBox(box) : class, boite englobant un objet
+          attr:
+            -List(box*) boxList : liste des boxes constituant l'objet
+            -bool canMove : ""
+            -bool canBeToped : ""
+            -uInt maxWeightOnTop
+            -bool canBeBottomed
+            -bool canBeRotated[AXIS] : booléen pour chaque axes
+            -bool isSingleBox : booléen car différents cas
+          méth:
+            -uInt getListLen() : renvoie la longueur de la liste de box
+            -box* getBoxNb(uInt nb) : renvoie la boxe à l'indice nb, vérification de l'indice : 0 <= nb <len(list)
+            -virtual bool collide(Box* one) : test collision par rapport aux sous-boite
+            -accesseur pour propriétes
+            
+    SpaceToFill(box) : class, espace à remplir, il faut lui demander si une boite peut s'insérer
+                  modèle intérieur en collection de boites internes
+                  attr:
+                    -Stack(Box*) boxStack : stack de boites uInternes(pour faciliter backtracking et dérécursification)
+                    -Double volLeft : volume libre(stocké)
+                    -Double precision : précision (à définir)                                                   /!\
+                  méth:
+                    -virtual bool collide(Box* one)
+                    -bool isEmpty() : renvoie true si l'espace est vide
+                    -uInt getVolLeft() : renvoie volume libre (uInt) (volLeft)
+                    -uInt getStackLen() : renvoie la taille du stack (uInt)  (nombre de boites internes)
+                    -bool isInternable(objectBox* box) : renvoie true/false si boîte correctement positionnée
+                        -bool isStable(Box* box) : cf algorithme d'équilibre
+                        -bool isCompatible(Box* box) : test ordre de chargement et peut-être soulevé et il peut-y avoir quelque chose au dessus cf cahier des charges
+                    -void uIntern(objectBox* box) : push la boite sur le stack /!\ ne fait pas de test            /!\
+                    -void empty() : vide le stack
+                    -objectBox* pop() : renvoie la dernière boite à avoir été insérée
+                    -void setPrecision(Double newPrecision) : remplace la precision par newPrecision, non-rétroactif
+                    -Stack(objectBox*) getBoxStack() : renvoie le stack de l'espace(pour afficher)
+                    -uInt getDensity() : renvoie la somme de la somme du volume de chaque boites et de chaques boites en contact pour toutes les boites
+                    -Vect3D getLargestBoxBehind() : renvoie la taille sur la profondeur de libre d'une section arrière
+                    -Vect3D getCenterOfMass() : centre de masse de l'ensemble des boites, la distance entre ce point et le centre géométrique = heuristique
+    PARTIE II Vue
+    View    :   class, base pour une vue, sert d'interface.
+        attr:
+            uInt longueur;
+            uInt largeur;
+
+            
+DECOUPAGE LOGICIEL
+    Modèles
+        -Core (algo)
+        -Structures de données
+        -Contraintes
+    Vues
+        -Acceuil
+        -visu configuration recherche (avant recherche de solution)
+            -véhicule
+                -taille
+                -aperçu
+            -boites
+                -tailles(x,y,z)
+                -fixe (y/n)
+                -peut-être écrasée(y/n)
+                -peut-être soulevée(y/n)
+                -poid(y/n)
+                -rotations possibles (x,y,z) (y/n)
+            -aperçu boite
+        -visualisation solution
+            -plusieurs solutions
+            -animation des solutions
+            -échelles
+            -repère
+            -identification des boites
+        -options
+    Controleur
+        -Acceuil
+            -quitter
+            -vers configuration recherche
+        -configuration de recherche
+            -contrôle véhicule
+                -tailles(x,y,z)
+            -contrôle boites
+                -ajouter-boite (objet)
+                    -ajouter-boite
+                        -tailles(x,y,z)
+                        -fixe (y/n)
+                        -peut-être écrasée(y/n)
+                        -peut-être soulevée(y/n)
+                        -poid(y/n)
+                        -rotations possibles (x,y,z) (y/n)
+            -contrôle critère de recherche
+                -Plus Dense || plus d'espace restant à l'arrière-x || poid + réparti (filtres)
+                -nb de solution max à présenter
+                -precision
+            -quitter
+            -vers visualisation solution
+        -visualisation solutions
+            -choix solution
+            -contrôle de l'animation (play-pause or next/previous)
+            -contrôle de l'echelle (zoom sur centre)
+            -trackball (rotations) (contrôle du repère)
+            -nouvelle recherche
+            -quitter
+
+
+
+
+
+
+
+

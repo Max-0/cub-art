@@ -1,0 +1,115 @@
+INTRO
+Voici la définition de ce qu’on voudrait :
+Choix entre plusieurs véhicules (choix de 3 véhicules prédéfinis ou d’1 4ème véhicule dont on définit les dimensions au moment du calcul
+Paramètres à tenir en compte pour le calcul :
+Dimensions du véhicule
+Poids des colis
+Dimensions des colis
+Possibilité de gerber les colis (en fonction du poids ou de notre choix) et en fonction des dimensions des colis en dessous (notion de colis supérieur « dépassant » le colis inférieur)
+Possibilité de ranger les colis selon une autre dimension (les « retourner »)
+Ordre de chargement et de déchargement.
+
+CHOIX LANGUAGE
+  python ou c++
+    -backtracking
+        -python:plus simple             +
+        -c++:plus compliqué             -
+    -librairie 3D (probablement)
+        -python:?                           -
+        -c++:sûr                            +
+    -structure de données souples   
+        -python:plus souple(et plus lisibles)       +
+        -c++:chargé                                 -
+    -rapiditée
+        -python:moins rapide        -
+        -c++:plus rapide            +
+    -natif
+        -python:non         -
+        -c++:oui            +
+
+->C++
+
+
+note:
+    cross-compiling / portage (à la fin)    ?
+
+
+CAHIER DES CHARGES :
+    Remplissage d'une boite englobante par boite pour optimiser volume
+        Partie I Coeur
+            -Taille boite englobante variable
+            -Taille autres boites variable
+            -rotation // x,y,z sur centre de masse si uniformément réparti de (90|180|270)° 
+            -poid
+        Partie II contraintes
+            -dépassement de colis (équilibre statique de 2 boîtes + marge car non-réaliste)
+            -ordre de chargement imposé (division en surface ds / ordre strict de calcul(démarre du fond))
+            -précision(découpage en petites boites / déplacement dx + collision boite alignée (AABB))
+        Partie III Interface-vue
+            -résultat
+                -2D pour test (face&&droite&&dessus)
+                -3D pour final
+            -consultation données
+        Partie IV Interface-controleur
+            -modification données
+            -modification vue
+            -gestion animation
+
+CHOIXS---------------------------------------:
+    -python ou c++ : C++
+    -cross compiling ou portage : ?
+    -ordre de chargement : définir 
+    -2D indispensable?
+
+STRUCTURES DE DONNEES:
+    
+    Vect2D : struct, vecteur (x,y,z) (uInt,uInt,uInt)
+    Box : class couche abstraite pour boite englobante ou non un objet
+          attr:
+            -uInt id : identifiant de la boite (par rapport à ce qu'elle contient spécial:SpaceToFill=0)
+            -Vect3D dim : dimension(dim//x, dim//y, dim//z)
+            -Vect3D centre : centre de la boite(x,y,z)
+          méth:
+            -virtual void rotate(X|Y|Z) : effectue une rotation de 90° sur X|Y|Z de la box
+            -static bool : collide(Box* one, Box* two) : renvoie true si les boites sont en collisions(AABB)
+            -static bool : isBoxInside(Box* mayInside, Box* mayOutside) = renvoie true si mayInside dans mayOutside
+            -static bool : isPointInside(vect3D point, Box* 
+            -void move(Vect3D displacement) : déplace la boite des  quantitées indiquées 
+            -uInt getVol() : renvoie le volume (dim.x*dim.y*dim.z)
+
+    ObjectBox(box) : class, boite englobant un objet
+          attr:
+            -List(box*) boxList : liste des boxes constituant l'objet
+            -uInt getListLen() : renvoie la longueur de la liste de box
+            -box* getBoxNb(uInt nb) : renvoie la boxe à l'indice nb, vérification de l'indice : 0 <= nb <len(list)
+            -uInt weight : poid en grammes
+
+
+    SpaceToFill(box) : class, espace à remplir, il faut lui demander si une boite peut s'insérer
+                  modèle intérieur en collection de boites internes
+                  attr:
+                    -Stack(objectBox*) boxStack : stack de boites uInternes(pour faciliter backtracking et dérécursification)
+                    -Double volLeft : volume libre(stocké)
+                    -Double precision : précision (à définir)                                                   /!\
+                  méth:
+                    -bool isEmpty() : renvoie true si l'espace est vide
+                    -uInt getVolLeft() : renvoie volume libre (uInt) (volLeft)
+                    -uInt getStackLen() : renvoie la taille du stack (uInt)  (nombre de boites internes)
+                    -bool isInternable(objectBox* box) : renvoie true/false si boîte correctement positionnée
+                    -void uIntern(objectBox* box) : push la boite sur le stack /!\ ne fait pas de test            /!\
+                    -void empty() : vide le stack
+                    -objectBox* pop() : renvoie la dernière boite à avoir été insérée
+                    -void setPrecision(Double newPrecision) : remplace la precision par newPrecision, non-rétroactif
+                    -Stack(objectBox*) getBoxStack() : renvoie le stack de l'espace(pour afficher)
+                    
+
+
+
+
+
+
+
+
+
+
+
