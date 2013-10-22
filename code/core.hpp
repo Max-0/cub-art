@@ -21,12 +21,24 @@ enum AXIS {X=0, Y=1, Z=2};
 
 //structure de donnée pour vecteur de taille 3
 struct Vect3D {
-    uInt x;
-    uInt y;
-    uInt z;
+    long int x;
+    long int y;
+    long int z;
 };
 //création dynamique+initialisation
-Vect3D* getNewVect(uInt x=0, uInt y=0, uInt z=0);
+Vect3D* getNewVect(long int x=0, long int y=0, long int z=0);
+
+/*
+    Tests
+*/
+void testCreation();   //test aussi destruction
+void testCollisions();      //Box*, Box* ; isBoxInside, isPointInside
+void testValidIntern();
+void testComplexIntern();
+void testConstraints();
+void testQuality();
+
+void testAll();
 
 //get squarred distance, calcul de la racine carrée long
 //fonction très utilisée
@@ -42,13 +54,13 @@ class Box{
     virtual void move(Vect3D* displacement);
     
     uInt getId();
-    uInt getVol();
-    uInt getWeight();
+    virtual uInt getVol();
+    virtual uInt getWeight();
     Vect3D* getDim();
     Vect3D* getCenter();
 
-    void setDim(uInt x, uInt y, uInt z);
-    void setCenter(uInt x, uInt y, uInt z);
+    virtual void setDim(long int x, long int y, long int z);
+    virtual void setCenter(long int x, long int y, long int z);
 
     virtual bool collide(Box* one);
     static bool isBoxInside(Box* mayInside, Box* mayOutside);
@@ -83,6 +95,8 @@ class ObjectBox : public Box
     virtual ~ObjectBox();
     void addBox(Box* newBox);
     void delBox(uInt boxIndex);     //delete la box
+    virtual uInt getVol();
+    virtual uInt getWeight();
     uInt getBoxNbOf();
     Box* getBoxNb(uInt nb);
     bool getCanMove();
@@ -93,6 +107,8 @@ class ObjectBox : public Box
     bool getIsSingleBox();
     int getBindedSpace();
     int getChargingOrder();
+    virtual void setDim(long int x, long int y, long int z);
+    virtual void setCenter(long int x, long int y, long int z);
     void setCanMove(bool newVal);
     void setCanBeTopped(bool newVal);
     void setMaxWeightOnTop(uInt newVal);
@@ -120,8 +136,7 @@ class ObjectBox : public Box
 class SpaceToFill : public Box
 {
     public:
-    SpaceToFill(uInt id, Vect3D* dim, Vect3D* center, uInt weight, 
-                double volume, double P_precision);
+    SpaceToFill(uInt id, Vect3D* dim, Vect3D* center, uInt weight);
     virtual ~SpaceToFill();
     virtual bool collide(Box* one);     //désactiver
     bool isEmpty();     //(boxStack)
@@ -130,11 +145,11 @@ class SpaceToFill : public Box
     bool isInternable(ObjectBox* toIntern);
     bool isStable(Box* box); // si internée directement
     bool isCompatible(ObjectBox* box);    //comparaison paramètres individuels de chaques boites
-    void intern(Box* box);
+    void intern(ObjectBox* box);
     void empty();   //destructrice
     Box* pop();   //pop sur le stack
     Box* back();
-    std::deque<Box*>* getBoxStack();
+    std::deque<ObjectBox*>* getBoxStack();
     //filtres
     uInt getDensity();
     Vect3D* getLargestBoxBehind(float step);    //step : pourcentage 
@@ -145,7 +160,7 @@ class SpaceToFill : public Box
     uInt getQuality();
 
     protected:
-    std::deque<Box*> boxStack;
+    std::deque<ObjectBox*> boxStack;
     double volLeft;
     double volTot;
     double precision;
