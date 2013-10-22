@@ -4,7 +4,7 @@ void printVect(Vect3D *toPrint){
     std::cout << "(" << toPrint->x << ", " << toPrint->y << ", " << toPrint->z << std::endl;    
 }
 
-void outputTest(bool test, bool awaited, char* prefix){
+void outputTest(bool test, bool awaited, const char* prefix){
     std::string output;
     if( ( test and awaited ) or ( (not test) and (not awaited) ) )	//test == awaited
         output = "OK"; 
@@ -172,6 +172,8 @@ void testConstraints(){
     ObjectBox* Obj3 = new ObjectBox(33, getNewVect(50, 50, 50), getNewVect(-51, -224, 0), 50, 500, true, true, false, rotations, true, 2, 30);
     ObjectBox* Obj4 = new ObjectBox(34, getNewVect(50, 50, 50), getNewVect(0, -173, 0), 50, 500, true, true, true, rotations, true, 3, 29); 
     ObjectBox* Obj5 = new ObjectBox(35, getNewVect(50, 50, 50), getNewVect(-51, -173, 0), 50, 500, true, true, true, rotations, true, 3); 
+    ObjectBox* Obj6 = new ObjectBox(36, getNewVect(50, 50, 50), getNewVect(-102, -224, 0), 50, 500, true, true, true, rotations, true);
+    ObjectBox* Obj7 = new ObjectBox(37, getNewVect(100, 50, 50), getNewVect(-78, -173, 0), 50, 500, true, true, true, rotations, true);
     outputTest(testSpace->isInternable(Obj1), true, "   1:");
     testSpace->intern(Obj1);
     outputTest(testSpace->isInternable(Obj2), false, "   2:");
@@ -179,13 +181,37 @@ void testConstraints(){
     testSpace->intern(Obj3);
     outputTest(testSpace->isInternable(Obj4), false, "   4:");
     outputTest(testSpace->isInternable(Obj5), true, "   5:");
-    delete Obj2, Obj4, Obj5, testSpace;
+    outputTest(testSpace->isInternable(Obj6), true, "   6:");
+    testSpace->intern(Obj6);
+    outputTest(testSpace->isInternable(Obj7), true, "   7:");
+    delete Obj2, Obj4, Obj5, Obj7,testSpace;
 }
 
 void testQuality(){
-    /*
-        A completer
-    */
+    std::cout << "test changements de qualitée" << std::endl;
+    bool rotations[3];
+    SpaceToFill* lowSpace = new SpaceToFill(41, getNewVect(500, 500, 500), getNewVect(0, 0, 0), 500);
+    SpaceToFill* highSpace = new SpaceToFill(42, getNewVect(500, 500, 500), getNewVect(0, 0, 0), 500);
+    //  1->3 : highSpace ; 4->6 : lowSpace
+    ObjectBox* Obj1 = new ObjectBox(43, getNewVect(50, 50, 50), getNewVect(-25, 0, -25), 50, 5000, true, true, true, rotations, true);
+    ObjectBox* Obj2 = new ObjectBox(44, getNewVect(50, 50, 50), getNewVect(25, 0, 25), 50, 5000, true, true, true, rotations, true);
+    ObjectBox* Obj3 = new ObjectBox(45, getNewVect(50, 50, 50), getNewVect(0, 0, 0), 50, 5000, true, true, true, rotations, true);
+    ObjectBox* Obj4 = new ObjectBox(46, getNewVect(50, 50, 50), getNewVect(100, 0, 64), 50, 5000, true, true, true, rotations, true);
+    ObjectBox* Obj5 = new ObjectBox(47, getNewVect(50, 50, 50), getNewVect(200, 0, -96), 50, 5000, true, true, true, rotations, true);
+    ObjectBox* Obj6 = new ObjectBox(48, getNewVect(50, 50, 50), getNewVect(100, 0, -150), 50, 5000, true, true, true, rotations, true);
+    highSpace->intern(Obj3);
+    outputTest(highSpace->getQuality() > lowSpace->getQuality(), true, "    1:");
+    lowSpace->intern(Obj6);
+    outputTest(highSpace->getQuality() > lowSpace->getQuality(), true, "    2:");
+    highSpace->intern(Obj1);
+    outputTest(highSpace->getQuality() > lowSpace->getQuality(), true, "    3:");
+    lowSpace->intern(Obj5);
+    outputTest(highSpace->getQuality() > lowSpace->getQuality(), true, "    4:");
+    highSpace->intern(Obj2);
+    outputTest(highSpace->getQuality() > lowSpace->getQuality(), true, "    5:");
+    lowSpace->intern(Obj4);
+    outputTest(highSpace->getQuality() > lowSpace->getQuality(), true, "    6:");
+    delete lowSpace, highSpace;
 }
 
 void testAll(){
@@ -194,6 +220,7 @@ void testAll(){
     testValidIntern();
     testComplexIntern();
     testConstraints();
+    testQuality();
 }
 
 float getSqDst(Vect3D* pointOne, Vect3D* pointTwo){
@@ -709,7 +736,6 @@ uInt SpaceToFill::getDensity(){
         revoie la somme des sommes des volumes des boites adjacente à chaque boite
     */
     uInt density=0;
-    uInt objectDensity=0;
     Box* testBox = new Box(0, getNewVect(0, 0, 0), getNewVect(0,0,0), 0);
     for(int i = 0 ; i < boxStack.size() ; ++i){
         uInt objectDensity=boxStack[i]->getVol();
@@ -725,13 +751,14 @@ uInt SpaceToFill::getDensity(){
 }
 
 Vect3D* SpaceToFill::getLargestBoxBehind(float step){
-    Box* test = new Box(0, getNewVect(dim->x, dim->y, 0), getNewVect(center->x, center->y, center->z), 0);
+    Box* test = new Box(0, getNewVect(dim->x, dim->y, 0), getNewVect(center->x, center->y, dim->z), 0);
         bool noColl = true;
-        while(noColl){
+        for(int j = 0 ; j < (dim->z)/step and noColl ; ++j){
             for(int i = 0 ; i < boxStack.size() and noColl ; ++i)
                 noColl = not boxStack[i]->collide(test);
             if(noColl){
-                test->setDim(test->getDim()->x, test->getDim()->y, test->getDim()->z+dim->z+step);
+                test->setDim(test->getDim()->x, test->getDim()->y, j*step);
+                test->move(getNewVect(0, 0, -(j/2)*step));
             }
         } 
         Vect3D* retour = getNewVect(test->getDim()->x, test->getDim()->y, test->getDim()->z);
@@ -746,14 +773,14 @@ Vect3D* SpaceToFill::getCenterOfMass(){
         ex : m1, m2 ; x1, x1 -> Gx = (m1.x1+m2.x2)/'m1+m2)
     */  
     Vect3D *retour = getNewVect(0,0,0);
-    uInt totalMass = 0;
-    uInt massTimesPos = 0; 
+    long int totalMass = 0;
+    long int massTimesPos = 0; 
     for(uInt axe = 0 ; axe < 3 ; ++axe){     //uInt axe < 3 := AXIS axe
        massTimesPos = 0;
        for(uInt i = 0 ; i < boxStack.size() ; ++i){
+            totalMass += boxStack[i]->getWeight();
             switch(axe){
                 case 0:
-                    totalMass += boxStack[i]->getWeight();
                     massTimesPos += boxStack[i]->getCenter()->x*boxStack[i]->getWeight();
                     break;
                 case 1:
@@ -763,6 +790,10 @@ Vect3D* SpaceToFill::getCenterOfMass(){
                     massTimesPos += boxStack[i]->getCenter()->z*boxStack[i]->getWeight();
                     break;
             }
+       }
+       if(totalMass == 0){
+           totalMass = 1;
+           massTimesPos = 0;    //vide = 0
        }
        switch(axe){
         case 0:
@@ -794,7 +825,9 @@ uInt SpaceToFill::getQuality(){
     if(equilibrium < 0)
         equilibrium *= -1;
     delete massCenter;
-    if(equilibrium < 0)
-        equilibrium *= -1;
-    return( (P_volLeft + density + behind - equilibrium ) * boxStack.size());
+    //P_volLeft + density + behind ?> equilibrium
+    int retour = ( (P_volLeft + density + behind - equilibrium ) * boxStack.size());
+    if(retour < 0)
+        retour *= -1;
+    return retour;
 }

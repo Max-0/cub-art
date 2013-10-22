@@ -43,33 +43,43 @@ Compilation:
 
 CAHIER DES CHARGES :
     Remplissage d'une boite englobante par boite pour optimiser volume
-        Partie I Coeur
-            -Boite
-            -Vecteurs
-            -Algorithmes
-                -collision 3D AABB
-                -rotations // axes centrer sur centre géométrique  (swaps de coordonnées)
-                -backtracking
-                -équilibre 3D
-                    -surface de contact
-                -répartition des poids
-            -Taille boite englobante variable
-            -Taille autres boites variable
-            -rotation // x,y,z sur centre de masse si uniformément réparti de (90|180|270)° 
-            -poid
+        Partie I Coeur          x
+            -Boite              x
+            -Vecteurs           x
+            -Algorithmes            x
+                -collision 3D AABB              x
+                -rotations // axes centrer sur centre géométrique  (swaps de coordonnées)   -x
+                -équilibre 3D           x
+                    -surface de contact         x
+                -répartition des poids              x
+            -Taille boite englobante variable       x
+            -Taille autres boites variable          x
+            -rotation // x,y,z sur centre de masse si uniformément réparti de (90|180|270)°     !!
+            -poid           x
         Partie II contraintes
-            -dépassement de colis (équilibre statique de 2 boîtes + marge car non-réaliste)
-            -ordre de chargement imposé (division en surface ds / ordre strict de calcul(démarre du fond))
-            -précision(découpage en petites boites / déplacement dx + collision boite alignée (AABB))
-            -peut-ere tournée (dans quel sens)
-            -peut-être gerbée (poid au dessus/en-dessous)
-
-        Partie III Interface-vue
+            -dépassement de colis (équilibre statique de 2 boîtes + marge car non-réaliste)     x
+            -ordre de chargement imposé (ordre strict de calcul(démarre du fond))               x
+            -précision(déplacement dx + collision boite alignée (AABB))                         x
+            -peut-ere tournée (dans quel sens)                                                  x
+            -peut-être gerbée (poid au dessus/en-dessous)                                       x
+        Partie III algorithme proprement dit
+            Utiliser branch & bound
+            -filtres de qualité             x
+            -structure arborescente
+            -ajout branch structure arborescente
+            -ajout bound structure arborescente
+            -ajout prune structure arborescente
+            -écriture boucle de backtracking
+            -callback pour mettre vue à jour lors du calcul
+        Partie IV Interface-vue
+            -création d'espace à remplir
+            -création d'objets pour remplir les espaces
+            -paramètrages algorithme
             -résultat
                 -2D pour test (face&&droite&&dessus)
                 -3D pour final
             -consultation données
-        Partie IV Interface-controleur
+        Partie V Interface-controleur
             -modification données
             -modification vue
             -gestion animation
@@ -111,62 +121,18 @@ ALGORITHME rotations//axes (3D):
             échanger dimesions y,z
 
 ALGORITHME EQUILIBRE:
-    //division de la boite en 3 sections : gauche-masse-droite selon 
-    //l'axe parralèle à sa plus grande longeur|largeur passant par le centre
-    //chaque section fait 33% de la longueur//axe
-    //I : si au-dessus de la section il y a quelque chose, 
-    //      il faut quelque chose en dessous aussi
-    //II : au moins 2 sections doivent avoir quelque chose en dessous
-    //(III) : si centre de masse spécifié, section masse centré dessus
-    //(IV) : masse doit avoir quelque chose en dessous
-    // si I && II (&& III && IV):
-    //      boite en équilibre
-    dans objet espace
-    pour boite demandée
-    pour axe:Largeur ou longueur
-        Box* section1 : 33% de taille(axe) 100% les autres, avant les autres sur axe
-        Box* sectionMass : 33% de taille(axe) 100% les autres, centré sur centre de masse (millieu par défaut)
-        Box* section3 : 33% de taille(axe) 100% les autres, après sectionMass
-        bool topped[section]=false,false,false : la section est en dessous de quelque chose
-        pour chaque section:
-            si(section.bouger(haut, 2cm) -> collision):
-                topped[section]=true
-        bool onTop[section] = false  //section en déséquilibre par défaut
-        pour chaque section:
-            si(section.bouger(bas, 2cm) -> collision):
-                onTop[section]=true
-        //vérification
-        bool retour=true
-        int nbOfOnTop=0 // nombre de section en équilibre
-        pour chaque section et tant que retour
-            retour = retour and ( (topped and onTop) or (not topped and true) )//(I)
-            if(onTop[section])  //(II)
-                nbOfOnTop ++
-        fin pour
-        retour = retour and nbOfOnTop >= 2
-        return retour
-
-
+    Division surface inférieure de la box en m*n petites surface ds,
+    pour chaque ds, si elle repose sur un autre colis ou sur le sol : +1
+    si le compteur atteint (m*n)/2 : true, sinnon : false
+    //algo implémenté cf : SpaceToFill::isStable
 
 HEURISTIQUE backtracking :
     Aucun coli n'est écrasé && Touts colis en équilibre && maximum de colis && maximum de colis au contact && maximum de volume au contact && meilleure boite arrière
+    représenté par la fonction SpaceToFill::getQuality
 
 ALGORITHME backtracking :
-    Recevoir en entrée x boite à agencer
-    Chacune avec contrainte sur véhicule, rotation, hauteur, ordre de chargement
-    Recevoir en entrée y espace de travail
-    Creer liste de solution en construction
-    Creer liste de solution
-    pour toutes solution en construction:
-         pour toutes boites:
-             pour toutes positions:
-                 tester position dans la solution en construction
-                 si heuristique true
-                      copie(boite+position) dans copie(solution en construction)
-                      placer copie(solution en construction) dans la liste de solution en construction
-             si toutes boite dans espace
-                copier solution en construction dans liste construction
-         del solution en construction
+    classique branch and bound, sur base de structure arborescente
+    pour bound : SpaceToFill::getQuality
 
 complexité:
     x : boites à agencer
@@ -187,6 +153,7 @@ complexité:
             volume : 15m³
             précision : 1cm
             c = 35*1*15/0.001 = 525 000 iter
+            pour 2 camions = 1 050 000 iter
        
 
 CHOIXS---------------------------------------:
@@ -254,19 +221,29 @@ STRUCTURES DE DONNEES:
                     -uInt getDensity() : renvoie la somme de la somme du volume de chaque boites et de chaques boites en contact pour toutes les boites
                     -Vect3D getLargestBoxBehind() : renvoie la taille sur la profondeur de libre d'une section arrière
                     -Vect3D getCenterOfMass() : centre de masse de l'ensemble des boites, la distance entre ce point et le centre géométrique = heuristique
-    PARTIE II Vue
-    View    :   class, base pour une vue, sert d'interface.
-        attr:
-            uInt longueur;
-            uInt largeur;
 
-            
-DECOUPAGE LOGICIEL
-    Modèles
-        -Core (algo)
-        -Structures de données
-        -Contraintes
-    Vues
+    III : Algorithme (principal)
+    SemiSol : struct, réuni list de SpaceToFill* et de ObjectBox*
+            .spaces : std::vector<SpaceToFill*>;
+            .objectsLefts : std::vector<ObjectBox*>;
+
+    BandBTree : class, structure arborescente incluant une configuration ainsi que des sous-configurations
+            attr:
+                static long int highestLowBound = 0;
+                bool hasBranched = false;
+                std::vector<ObjectBox*> toFitIn;    //pas encore inséré
+                std::vector<SpaceToFill*> toFill;   //déjà inséré
+                std::vector<BandBTree*> sons;
+                std::vector<long int> bounds;
+            meth:
+                void branch();
+                void bound();
+                void prune();
+                uInt getsonsLength();
+                BandBTree* getSonNb(uInt nb);   //peut renvoyer null
+                ~BandBTree();
+
+    IV : Vues
         -Acceuil
         -visu configuration recherche (avant recherche de solution)
             -véhicule
@@ -287,7 +264,7 @@ DECOUPAGE LOGICIEL
             -repère
             -identification des boites
         -options
-    Controleur
+    V : Controleur
         -Acceuil
             -quitter
             -vers configuration recherche
@@ -318,9 +295,7 @@ DECOUPAGE LOGICIEL
             -quitter
 
 
-
-
-
-
-
+Estimation temps necessaire pour effectuer toutes les opérations :
+        Au fûr et à mesure que l'on descend dans l'arbre, plus d'ObjectBox sont placés
+        chaque embranchement désigne un véhicule et une position
 
