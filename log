@@ -241,7 +241,10 @@ STRUCTURES DE DONNEES:
                 void prune();
                 uInt getsonsLength();
                 BandBTree* getSonNb(uInt nb);   //peut renvoyer null
+                getHasBranched();
                 ~BandBTree();
+
+    /*Parcour à déterminer*/
 
     IV : Vues
         -Acceuil
@@ -264,6 +267,7 @@ STRUCTURES DE DONNEES:
             -repère
             -identification des boites
         -options
+
     V : Controleur
         -Acceuil
             -quitter

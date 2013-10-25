@@ -19,6 +19,8 @@ typedef unsigned int uInt;
 //lisibilitée du code
 enum AXIS {X=0, Y=1, Z=2};
 
+void outputTest(bool, bool, char*);
+
 //structure de donnée pour vecteur de taille 3
 struct Vect3D {
     long int x;
@@ -27,18 +29,6 @@ struct Vect3D {
 };
 //création dynamique+initialisation
 Vect3D* getNewVect(long int x=0, long int y=0, long int z=0);
-
-/*
-    Tests
-*/
-void testCreation();   //test aussi destruction
-void testCollisions();      //Box*, Box* ; isBoxInside, isPointInside
-void testValidIntern();
-void testComplexIntern();
-void testConstraints();
-void testQuality();
-
-void testAll();
 
 //get squarred distance, calcul de la racine carrée long
 //fonction très utilisée
@@ -158,6 +148,8 @@ class SpaceToFill : public Box
     Vect3D* getGeoCenter(); //retourne sens géo 
     //espace pour comparaison avec centre de masse
     uInt getQuality();
+    
+    SpaceToFill* getCopy();
 
     protected:
     std::deque<ObjectBox*> boxStack;
