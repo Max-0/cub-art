@@ -10,12 +10,12 @@ class SpaceBandBTree{
         SpaceBandBTree(float precision = 5);
         virtual ~SpaceBandBTree();
         virtual void branch();
-        virtual void bound();       //todo
-        virtual void prune();       //todo
-        virtual bool isSol();       //todo
-        virtual long long int getQuality();
-        void addSpace(SpaceToFill* toAdd);      //todo
-        void addObject(ObjectBox* toAdd);       //todo
+        virtual void bound();       
+        virtual void prune();       
+        virtual bool isSol();       
+        virtual long long int getQuality();	
+        void addSpace(SpaceToFill* toAdd);     
+        void addObject(ObjectBox* toAdd);     
         uInt getSonsLength();
         SpaceBandBTree* getSonNb(uInt nb);       //peut renvoyer NULL
         bool getHasBranched();

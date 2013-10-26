@@ -1,6 +1,6 @@
 #include"algo.hpp"
 
-static long int SpaceBandBTree::highestLowBound = 0;
+long int SpaceBandBTree::highestLowBound = 0;
 
 SpaceBandBTree::SpaceBandBTree(float precision){
      precisionStep = precision;
@@ -40,7 +40,13 @@ void SpaceBandBTree::branch(){
     ObjectBox* nextObj = objects.back();
     objects.pop_back();
     for(uInt aSpace = 0 ; aSpace < spaces.size() ; ++aSpace){   //test insertion dans nimporte quel espace
-        for(uInt axe = 0 ; axe < 3 ; ++axe){                    //rotations (axe)
+	AXIS allAxis[3];
+	allAxis[0] = X;
+	allAxis[1] = Y;
+	allAxis[2] = Z;
+	AXIS axe = X;
+        for(int iAx = 0 ; iAx < 3 ; iAx++){                    //rotations (axe)
+	    axe = allAxis[iAx];
             for(uInt rot = 0 ; rot <= 4 ; ++rot){               //rotations (suite)
                 uInt nbOnX = (spaces[aSpace]->getDim()->x - nextObj->getDim()->x)/precision;
                 uInt nbOnY = (spaces[aSpace]->getDim()->y - nextObj->getDim()->y)/precision;
@@ -65,12 +71,13 @@ void SpaceBandBTree::branch(){
                                         sons.back()->addSpace(copy);
                                     }
                                 }
-                                for(uInt obj = 0 ; obj < objectsLefts.size() ; ++obj)
-                                    if(objectsLefts[obj]->getId() != nextObj->getId())
-                                        (SpaceBandBTree*) sons.back()->addObject(objectsLefts[obj]->getCopy());
+                                for(uInt obj = 0 ; obj < objects.size() ; ++obj)
+                                    if(objects[obj]->getId() != nextObj->getId())
+                                        sons.back()->addObject(objects[obj]->getCopy());
                             }
+                            nextObj->move(getNewVect(0, precision, 0));
                         }
-                        nextObj->move(getNewVect(0, precision, 0));
+                        nextObj->move(getNewVect(precision, 0, 0));
                     }
                 nextObj->move(getNewVect(0, 0, precision));    
                 }
@@ -82,12 +89,48 @@ void SpaceBandBTree::branch(){
 }
 
 void SpaceBandBTree::bound(){
-    if(!branched)
+    if(!hasBranched)
         return;     //do nothing
-    long long unsigned int temp = 0;        //stockage qualitée du noeud à l'étude
     for(int s = 0 ; s < sons.size() ; ++s){
-        temp=0;
-        for(int sq = 0 ; sq < 
+    	if(sons[s]->getQuality() < lowerBound)
+		lowerBound = sons[s]->getQuality();
+        else if(sons[s]->getQuality() > upperBound)
+		upperBound = sons[s]->getQuality();
+    }
+    if(highestLowBound < lowerBound)
+	highestLowBound == lowerBound;
+}
+
+void SpaceBandBTree::prune(){
+    if(not hasBranched)
+	return;
+    for(uInt s = 0 ; s < getSonsLength() ; ++s){
+	if(not sons[s]->getHasBranched())
+	    return;
+    	if(sons[s]->getQuality() < highestLowBound){
+	    delete sons[s];
+	    sons.erase(sons.begin()+s);
+        }
     }
 }
 
+bool SpaceBandBTree::isSol(){
+    return not (not hasBranched or sons.size() > 0);
+}
+
+long long int SpaceBandBTree::getQuality(){
+    long long int retour = 0;
+    for(int i = 0 ; i < spaces.size() ; ++i)
+	retour += spaces[i]->getQuality();
+    return retour;
+}
+
+void SpaceBandBTree::addSpace(SpaceToFill* toAdd){
+     if(toAdd != NULL)
+	spaces.push_back(toAdd);
+}
+
+void SpaceBandBTree::addObject(ObjectBox* toAdd){
+     if(toAdd != NULL)
+	objects.push_back(toAdd);
+}

@@ -17,7 +17,7 @@
 typedef unsigned int uInt;
 
 //lisibilitée du code
-enum AXIS {X=0, Y=1, Z=2};
+enum AXIS {X, Y, Z};
 
 void outputTest(bool, bool, char*);
 
