@@ -86,11 +86,11 @@ uInt Box::getId(){
     return id;    
 }
 
-uInt Box::getVol(){
+long long int Box::getVol(){
     return dim->x*dim->y*dim->z;    
 }
 
-uInt Box::getWeight(){
+long long int Box::getWeight(){
     return weight;    
 }
 
@@ -242,7 +242,7 @@ void ObjectBox::delBox(uInt boxIndex){     //delete la box
     }
 }
 
-uInt ObjectBox::getVol(){
+long long int ObjectBox::getVol(){
     uInt retour = 0;
     for(int i = 0 ; i < boxList.size() ; ++i){
         retour += boxList[i]->getVol();    
@@ -250,7 +250,7 @@ uInt ObjectBox::getVol(){
     return retour;
 }
 
-uInt ObjectBox::getWeight(){
+long long int ObjectBox::getWeight(){
     uInt retour = 0;
     for(int i = 0 ; i < boxList.size() ; ++i ){
         retour += boxList[i]->getWeight();
@@ -412,8 +412,8 @@ bool SpaceToFill::isEmpty(){     //(boxStack)
     return boxStack.empty();
 }
 
-uInt SpaceToFill::getVolLeft(){
-    uInt volLeft = getVol();
+long long int SpaceToFill::getVolLeft(){
+    long long int volLeft = getVol();
     for(uInt i = 0 ; i < boxStack.size() ; ++i)
         volLeft -= boxStack[i]->getVol();
     return volLeft;
@@ -605,9 +605,9 @@ Vect3D* SpaceToFill::getGeoCenter(){
     return getNewVect(center->x, center->y, center->z);    
 }
 
-uInt SpaceToFill::getQuality(){
-    uInt P_volLeft = getVolLeft();
-    uInt density = getDensity();
+long long int SpaceToFill::getQuality(){
+    long long int P_volLeft = getVolLeft();
+    long long int density = getDensity();
     Vect3D* boxBehind = getLargestBoxBehind(5);
     uInt behind = boxBehind->z;
     delete boxBehind;
@@ -625,4 +625,5 @@ uInt SpaceToFill::getQuality(){
 
 SpaceToFill* SpaceToFill::getCopy(){
     SpaceToFill* retour = new SpaceToFill(id, getNewVect(dim->x, dim->y, dim->z), getNewVect(center->x, center->y, center->z), weight);
+    return retour;
 }

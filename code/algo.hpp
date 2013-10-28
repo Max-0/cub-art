@@ -19,10 +19,10 @@ class SpaceBandBTree{
         uInt getSonsLength();
         SpaceBandBTree* getSonNb(uInt nb);       //peut renvoyer NULL
         bool getHasBranched();
+        static long int highestLowBound;
     protected:
         std::vector<SpaceToFill*> spaces;
         std::vector<ObjectBox*> objects;
-        static long int highestLowBound;
         float precisionStep;         //utilisé dans branch()
         bool hasBranched;
         std::vector<SpaceBandBTree*> sons;

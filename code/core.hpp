@@ -44,8 +44,8 @@ class Box{
     virtual void move(Vect3D* displacement);
     
     uInt getId();
-    virtual uInt getVol();
-    virtual uInt getWeight();
+    virtual long long int getVol();
+    virtual long long int getWeight();
     Vect3D* getDim();
     Vect3D* getCenter();
 
@@ -85,8 +85,8 @@ class ObjectBox : public Box
     virtual ~ObjectBox();
     void addBox(Box* newBox);
     void delBox(uInt boxIndex);     //delete la box
-    virtual uInt getVol();
-    virtual uInt getWeight();
+    virtual long long int getVol();
+    virtual long long int getWeight();
     uInt getBoxNbOf();
     Box* getBoxNb(uInt nb);
     bool getCanMove();
@@ -130,7 +130,7 @@ class SpaceToFill : public Box
     virtual ~SpaceToFill();
     virtual bool collide(Box* one);     //désactiver
     bool isEmpty();     //(boxStack)
-    uInt getVolLeft();
+    long long int getVolLeft();
     uInt getStackLen();
     bool isInternable(ObjectBox* toIntern);
     bool isStable(Box* box); // si internée directement
@@ -147,7 +147,7 @@ class SpaceToFill : public Box
     Vect3D* getCenterOfMass();
     Vect3D* getGeoCenter(); //retourne sens géo 
     //espace pour comparaison avec centre de masse
-    uInt getQuality();
+    long long int getQuality();
     
     SpaceToFill* getCopy();
 

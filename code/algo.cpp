@@ -105,8 +105,6 @@ void SpaceBandBTree::prune(){
     if(not hasBranched)
 	return;
     for(uInt s = 0 ; s < getSonsLength() ; ++s){
-	if(not sons[s]->getHasBranched())
-	    return;
     	if(sons[s]->getQuality() < highestLowBound){
 	    delete sons[s];
 	    sons.erase(sons.begin()+s);

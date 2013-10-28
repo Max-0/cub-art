@@ -206,6 +206,67 @@ void testCore(){
     testQuality();
 }
 
+//Algo
+void testCreationAlgo(){
+    SpaceBandBTree* test = new SpaceBandBTree();
+    std::cout << "    création SpaceBandBTree : Ok" << std::endl; 
+    delete test;
+    std::cout << "    suppression SpaceBandBTree : Ok" << std::endl; 
+}
+
+void testBranch(){
+    std::cout << "    Test SpaceBandBTree::branch()" << std::endl;
+    SpaceBandBTree* test = new SpaceBandBTree();
+    SpaceToFill* testSpace = new SpaceToFill(0, getNewVect(50, 50, 50), getNewVect(0, 0, 0), 500);
+    bool rotations[3] = {true, true, true};
+    ObjectBox* testObject = new ObjectBox(1, getNewVect(5, 5, 5), getNewVect(0, 0, 0), 0, 5000, true, true, true, rotations, true);
+    test->addSpace(testSpace);
+    test->addObject(testObject);
+    outputTest(test->getHasBranched(), false, "        1:");
+    outputTest(test->getSonsLength() == 0, true, "        1.2:");
+    test->branch();
+    outputTest(test->getHasBranched(), true, "        2:");
+    outputTest(test->getSonsLength() > 0, true, "        2.1:");
+    std::cout << "    Nombre de sous-noeuds : " << test->getSonsLength() << std::endl;
+}
+
+void testBound(){
+    std::cout << "    Test SpaceBandBTree::bound()" << std::endl;
+    SpaceBandBTree* test = new SpaceBandBTree();
+    SpaceToFill* testSpace = new SpaceToFill(0, getNewVect(50, 50, 50), getNewVect(0, 0, 0), 500);
+    bool rotations[3] = {true, true, true};
+    ObjectBox* testObject = new ObjectBox(1, getNewVect(5, 5, 5), getNewVect(0, 0, 0), 0, 5000, true, true, true, rotations, true);
+    test->addSpace(testSpace);
+    test->addObject(testObject);
+    test->branch();
+    test->bound();
+    std::cout << "        Tout s'est bien passer" << std::endl;
+}
+void testPrune(){
+    std::cout << "    Test SpaceBandBTree::prune()" << std::endl;
+    SpaceBandBTree* test = new SpaceBandBTree();
+    SpaceToFill* testSpace = new SpaceToFill(0, getNewVect(50, 50, 50), getNewVect(0, 0, 0), 500);
+    bool rotations[3] = {true, true, true};
+    ObjectBox* testObject = new ObjectBox(1, getNewVect(5, 5, 5), getNewVect(0, 0, 0), 0, 5000, true, true, true, rotations, true);
+    test->addSpace(testSpace);
+    test->addObject(testObject);
+    test->branch();
+    test->bound();
+    long long int sonsLength = test->getSonsLength();
+    test->prune();
+    outputTest(sonsLength < test->getSonsLength(), true, "        Réduction : ");
+    std::cout << "	" << test->getSonsLength()-sonsLength << " noeuds déffaussés" << std::endl;
+}
+
+void testAlgo(){
+    std::cout << "Test Algorithme" << std::endl;
+    testCreationAlgo();
+    testBranch();
+    testBound();
+    testPrune();
+}
+
 void testMain(){
-    testCore();    
+    testCore(); 
+    testAlgo();   
 }

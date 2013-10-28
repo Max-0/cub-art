@@ -1,6 +1,6 @@
 #include"tests.hpp"
 
 int main(){
-    testCore();
+    testMain();
     return 0;
 }
