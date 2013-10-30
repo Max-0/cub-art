@@ -5,6 +5,26 @@ struct SemiSol{
     std::vector<ObjectBox*> objectsLefts ;
 };
 
+class SpaceBandBTree;
+
+class SpaceNodeList{
+    public:
+	SpaceNodeList();
+        uInt size();
+        bool empty();
+        SpaceBandBTree* back();
+	void pop_back();
+	void push_back(SpaceBandBTree* toPush);
+	SpaceBandBTree* at(uInt index);
+	void setMaxLen(uInt P_maxLen);
+	void erase(uInt index);
+	uInt begin();
+    protected:
+	std::deque<SpaceBandBTree*> list;
+	std::deque<long long int> qualList;
+	uInt maxLength;
+};
+
 class SpaceBandBTree{
     public:
         SpaceBandBTree(float precision = 5);

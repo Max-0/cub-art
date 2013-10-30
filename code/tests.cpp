@@ -219,7 +219,7 @@ void testBranch(){
     SpaceBandBTree* test = new SpaceBandBTree();
     SpaceToFill* testSpace = new SpaceToFill(0, getNewVect(50, 50, 50), getNewVect(0, 0, 0), 500);
     bool rotations[3] = {true, true, true};
-    ObjectBox* testObject = new ObjectBox(1, getNewVect(5, 5, 5), getNewVect(0, 0, 0), 0, 5000, true, true, true, rotations, true);
+    ObjectBox* testObject = new ObjectBox(1, getNewVect(25, 25, 25), getNewVect(0, 0, 0), 0, 5000, true, true, true, rotations, true);
     test->addSpace(testSpace);
     test->addObject(testObject);
     outputTest(test->getHasBranched(), false, "        1:");
@@ -228,9 +228,11 @@ void testBranch(){
     outputTest(test->getHasBranched(), true, "        2:");
     outputTest(test->getSonsLength() > 0, true, "        2.1:");
     std::cout << "    Nombre de sous-noeuds : " << test->getSonsLength() << std::endl;
+    delete test;
 }
 
 void testBound(){
+    SpaceBandBTree::highestLowBound = 0;
     std::cout << "    Test SpaceBandBTree::bound()" << std::endl;
     SpaceBandBTree* test = new SpaceBandBTree();
     SpaceToFill* testSpace = new SpaceToFill(0, getNewVect(50, 50, 50), getNewVect(0, 0, 0), 500);
@@ -241,21 +243,33 @@ void testBound(){
     test->branch();
     test->bound();
     std::cout << "        Tout s'est bien passer" << std::endl;
+    delete test;
 }
+
 void testPrune(){
+    SpaceBandBTree::highestLowBound = 0;
     std::cout << "    Test SpaceBandBTree::prune()" << std::endl;
     SpaceBandBTree* test = new SpaceBandBTree();
-    SpaceToFill* testSpace = new SpaceToFill(0, getNewVect(50, 50, 50), getNewVect(0, 0, 0), 500);
+    SpaceToFill* testSpace = new SpaceToFill(0, getNewVect(50, 10, 30), getNewVect(0, 0, 0), 500);
     bool rotations[3] = {true, true, true};
     ObjectBox* testObject = new ObjectBox(1, getNewVect(5, 5, 5), getNewVect(0, 0, 0), 0, 5000, true, true, true, rotations, true);
+    ObjectBox* testO2 = new ObjectBox(2, getNewVect(5, 5, 5), getNewVect(0, 0, 0), 0, 5000, true, true, true, rotations, true);
     test->addSpace(testSpace);
     test->addObject(testObject);
+    test->addObject(testO2);
     test->branch();
     test->bound();
     long long int sonsLength = test->getSonsLength();
+    for(int i = 0 ; i < test->getSonsLength() ; ++i){
+	test->getSonNb(i)->branch();
+        test->getSonNb(i)->bound();
+	std::cout << i+1 << "/" << test->getSonsLength() << std::endl;
+    }
+    SpaceBandBTree::highestLowBound = 15021;
     test->prune();
     outputTest(sonsLength < test->getSonsLength(), true, "        Réduction : ");
     std::cout << "	" << test->getSonsLength()-sonsLength << " noeuds déffaussés" << std::endl;
+    delete test;
 }
 
 void testAlgo(){
