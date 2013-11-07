@@ -46,14 +46,24 @@ float getOnAxisDst(Vect3D* pointOne, Vect3D* pointTwo, AXIS which){
 
 Box::Box(uInt P_id, Vect3D *P_dim, Vect3D *P_center, uInt P_weight){
     id=P_id;
-    center=P_center;
-    dim=P_dim;
+    if(P_center)
+        center=P_center;
+    else
+        center = getNewVect(0, 0, 0);
+    if(P_dim)
+        dim=P_dim;
+    else
+        dim = getNewVect(0, 0, 0);
     weight=P_weight;
 }
 
 Box::~Box(){
-    delete dim;
-    delete center;
+    if(dim)
+        delete dim;
+    if(center)
+        delete center;
+    center = NULL;
+    dim=NULL;
 }
 
 /*virtual*/void Box::rotate(AXIS which){
@@ -209,6 +219,8 @@ ObjectBox::ObjectBox(uInt P_id,
           bool P_isSingleBox,
           int P_chargingOrder,
           int P_bindedSpace) : Box(P_id, P_dim, P_center, weight){
+
+
             maxWeightOnTop = P_maxWeightOnTop;
             canMove = P_canMove;
             canBeTopped = P_canBeTopped;
@@ -225,7 +237,7 @@ ObjectBox::ObjectBox(uInt P_id,
 
 ObjectBox::~ObjectBox(){
     while(not boxList.empty()){
-        delete boxList.back();
+        delete boxList[boxList.size()-1];
         boxList.pop_back();
     }
 }
@@ -386,7 +398,7 @@ bool ObjectBox::collide(Box* one){
 }
 
 ObjectBox* ObjectBox::getCopy(){
-    ObjectBox* copy = new ObjectBox(id, dim, center, weight, 
+    ObjectBox* copy = new ObjectBox(id, getNewVect(dim->x, dim->y, dim->z), getNewVect(center->x, center->y, center->z), weight, 
     maxWeightOnTop, canMove, canBeTopped, canBeBottomed, canBeRotated, isSingleBox, chargingOrder, bindedSpace);
 
     for(int i = 0 ; i < boxList.size() ; ++i)
@@ -400,8 +412,10 @@ SpaceToFill::SpaceToFill(uInt id, Vect3D* dim, Vect3D* center, uInt weight) : Bo
 }
 
 SpaceToFill::~SpaceToFill(){
-    while(not boxStack.empty())
-	delete pop();
+    while(not boxStack.empty()){
+	    delete boxStack.back();
+        boxStack.pop_back();
+    }
 }
 
 bool SpaceToFill::collide(Box* one){     
@@ -472,7 +486,8 @@ bool SpaceToFill::isStable(Box* box){   // si internée directement
                collidedDs += 1;
         }    
     }
-    delete ds, startPos;
+    delete ds;
+    delete startPos;
     return collidedDs >= (NBOFDS*NBOFDS)/2;
 }
 
@@ -499,12 +514,6 @@ void SpaceToFill::intern(ObjectBox* box){
     boxStack.push_back(box);    
 }
 
-void SpaceToFill::empty(){
-    while(not boxStack.empty()){
-        delete boxStack.back();
-        boxStack.pop_back();
-    }
-}
 
 Box* SpaceToFill::pop(){   //pop sur le stack
     Box* retour = boxStack.back();
@@ -522,11 +531,11 @@ std::deque<ObjectBox*>* SpaceToFill::getBoxStack(){
     return &boxStack;    
 }
 
-uInt SpaceToFill::getDensity(){
+long long int SpaceToFill::getDensity(){
     /*
         revoie la somme des sommes des volumes des boites adjacente à chaque boite
     */
-    uInt density=0;
+    long long int density=0;
     Box* testBox = new Box(0, getNewVect(0, 0, 0), getNewVect(0,0,0), 0);
     for(int i = 0 ; i < boxStack.size() ; ++i){
         uInt objectDensity=boxStack[i]->getVol();
@@ -538,6 +547,7 @@ uInt SpaceToFill::getDensity(){
         }
         density+=objectDensity;
     }
+    delete testBox;
     return density;
 }
 
@@ -617,7 +627,7 @@ long long int SpaceToFill::getQuality(){
         equilibrium *= -1;
     delete massCenter;
     //P_volLeft + density + behind ?> equilibrium
-    long long int retour = ( (P_volLeft + density + behind - equilibrium ) * boxStack.size());
+    long long int retour = ( ( 5*P_volLeft + 7*density + 15.5*behind - 1.5*equilibrium ) * boxStack.size());
     if(retour < 0)
         retour *= -1;
     return retour;

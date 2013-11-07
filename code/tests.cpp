@@ -59,8 +59,15 @@ void testCollisions(){
     coll4->setCenter(0, 0, 0);
     outputTest(coll4->collide(coll1), true, "    ");
     outputTest(coll4->collide(coll1), true, "    ");
-    delete test1, test2, test3, test5, test6;
-    delete coll1, coll2, coll3, coll4;
+    delete test1;
+    delete test2;
+    delete test3;
+    delete test5;
+    delete test6;
+    delete coll1;
+    delete coll2;
+    delete coll3;
+    delete coll4;
     //test géométrie
     std::cout << "tests géométrie" << std::endl;
     Box* test21 = new Box(20, getNewVect(50, 50, 50), getNewVect(0, 0, 0), 0);
@@ -86,7 +93,9 @@ void testCollisions(){
     outputTest(getOnAxisDst(ref, vtest2, Y) == 8, true, "      2:");
     outputTest(getSqDst(ref, vtest2) == 7*7+8*8+9*9, true, "     3:");
     outputTest(getOnAxisDst(ref, vtest1, X) == 0, true, "       4:");
-    delete ref, vtest1, vtest2;
+    delete ref;
+    delete vtest1;
+    delete vtest2;
 }
 
 void testValidIntern(){
@@ -106,7 +115,8 @@ void testValidIntern(){
     outputTest(intSpace->isCompatible(intObj), true, "      ");
     std::cout << "      test internation" << std::endl;
     outputTest(intSpace->isInternable(intObj), true, "      ");
-    delete intObj, intSpace;
+    delete intObj;
+    delete intSpace;
 }
 
 
@@ -142,7 +152,10 @@ void testComplexIntern(){
     intSpace->intern(Obj6);
     //test seconde colonne
     outputTest(intSpace->isInternable(Obj7), true, "     7:");
-    delete Obj4, Obj3, Obj5, Obj6, Obj7;
+    delete Obj4;
+    delete Obj3;
+    delete Obj5;
+    delete Obj7;
     delete intSpace;
 }
 
@@ -167,7 +180,11 @@ void testConstraints(){
     outputTest(testSpace->isInternable(Obj6), true, "   6:");
     testSpace->intern(Obj6);
     outputTest(testSpace->isInternable(Obj7), true, "   7:");
-    delete Obj2, Obj4, Obj5, Obj7,testSpace;
+    delete Obj2; 
+    delete Obj4;
+    delete Obj5; 
+    delete Obj7;
+    delete testSpace;
 }
 
 void testQuality(){
@@ -185,7 +202,7 @@ void testQuality(){
     highSpace->intern(Obj3);
     outputTest(highSpace->getQuality() > lowSpace->getQuality(), true, "    1:");
     lowSpace->intern(Obj6);
-    outputTest(highSpace->getQuality() > lowSpace->getQuality(), true, "    2:");
+    outputTest(highSpace->getQuality() > lowSpace->getQuality(), false, "    2:");
     highSpace->intern(Obj1);
     outputTest(highSpace->getQuality() > lowSpace->getQuality(), true, "    3:");
     lowSpace->intern(Obj5);
@@ -194,7 +211,8 @@ void testQuality(){
     outputTest(highSpace->getQuality() > lowSpace->getQuality(), true, "    5:");
     lowSpace->intern(Obj4);
     outputTest(highSpace->getQuality() > lowSpace->getQuality(), true, "    6:");
-    delete lowSpace, highSpace;
+    delete lowSpace;
+    delete highSpace;
 }
 
 void testCore(){
@@ -249,7 +267,7 @@ void testBound(){
 void testPrune(){
     SpaceBandBTree::highestLowBound = 0;
     std::cout << "    Test SpaceBandBTree::prune()" << std::endl;
-    SpaceBandBTree* test = new SpaceBandBTree();
+    SpaceBandBTree* test = new SpaceBandBTree(5, 3000, 550);
     SpaceToFill* testSpace = new SpaceToFill(0, getNewVect(50, 10, 30), getNewVect(0, 0, 0), 500);
     bool rotations[3] = {true, true, true};
     ObjectBox* testObject = new ObjectBox(1, getNewVect(5, 5, 5), getNewVect(0, 0, 0), 0, 5000, true, true, true, rotations, true);
@@ -263,12 +281,10 @@ void testPrune(){
     for(int i = 0 ; i < test->getSonsLength() ; ++i){
 	test->getSonNb(i)->branch();
         test->getSonNb(i)->bound();
-	std::cout << i+1 << "/" << test->getSonsLength() << std::endl;
     }
-    SpaceBandBTree::highestLowBound = 15021;
     test->prune();
-    outputTest(sonsLength < test->getSonsLength(), true, "        Réduction : ");
-    std::cout << "	" << test->getSonsLength()-sonsLength << " noeuds déffaussés" << std::endl;
+    outputTest(sonsLength > test->getSonsLength(), true, "        Réduction : ");
+    std::cout << "	" << sonsLength-test->getSonsLength() << " noeuds déffaussés" << " sur " << sonsLength << std::endl;
     delete test;
 }
 
@@ -278,6 +294,54 @@ void testAlgo(){
     testBranch();
     testBound();
     testPrune();
+    bool rotations[3];
+    for(int i = 0 ; i < 3 ; i++)
+        rotations[i] = true;
+    //sujets du test
+    std::vector<ObjectBox*> testObjects;
+    testObjects.push_back(new ObjectBox(1, getNewVect(10, 10, 10), getNewVect(0, 0, 0), 4, 5000, true, true, true, rotations, true));
+    testObjects.push_back(new ObjectBox(2, getNewVect(15, 20, 25), getNewVect(0, 0, 0), 10, 3000, true, true, true, rotations, true));
+    testObjects.push_back(new ObjectBox(4, getNewVect(25, 25, 15), getNewVect(0, 0, 0), 10, 2500, true, true, true, rotations, true));
+    testObjects.push_back(new ObjectBox(5, getNewVect(20, 15, 10), getNewVect(0, 0, 0), 10, 2500, true, true, true, rotations, true));
+    testObjects.push_back(new ObjectBox(6, getNewVect(10, 10, 25), getNewVect(0, 0, 0), 10, 2500, true, true, true, rotations, true));
+    testObjects.push_back(new ObjectBox(7, getNewVect(15, 25, 20), getNewVect(0, 0, 0), 10, 2500, true, true, true, rotations, true));
+    testObjects.push_back(new ObjectBox(8, getNewVect(20, 25, 10), getNewVect(0, 0, 0), 10, 2500, true, true, true, rotations, true));
+        //space test
+    std::vector<SpaceToFill*> testSpaces;
+    testSpaces.push_back(new SpaceToFill(11, getNewVect(100, 100, 100), getNewVect(0, 0, 0), 450));
+    testSpaces.push_back(new SpaceToFill(12, getNewVect(100, 75, 100), getNewVect(0, 0, 0), 450)); 
+    //calcul
+    SemiSol result = SpaceBandB(testObjects, testSpaces);
+    //suppression sujets
+    while( not testObjects.empty() ){
+        delete testObjects.back();
+        testObjects.pop_back();
+    }
+    while( not testSpaces.empty() ){
+        delete testSpaces.back();
+        testSpaces.pop_back();
+    }
+    //affichage solutions
+    std::cout << "     Test complet" << std::endl;
+    for(int i = 0 ; i  < result.spaces.size() ; ++i){
+        std::stringstream currAnalysis;
+        currAnalysis << "    Containers" << std::endl;
+        currAnalysis << "        ID, Stack Size, Quality, Inside..." << std::endl;
+        currAnalysis << "        ";
+        currAnalysis << result.spaces[i]->getId() << ", " ;
+        currAnalysis << result.spaces[i]->getStackLen() << "," ;
+        currAnalysis << result.spaces[i]->getQuality() << ", " << std::endl;
+        currAnalysis << "            ID, Size(x, y, z), pos(x, y, z)" << std::endl;
+        std::deque<ObjectBox*> *inBoxes = result.spaces[i]->getBoxStack();
+        for(int j = 0 ; j < result.spaces[i]->getStackLen() ; j++){
+            currAnalysis << "            ";
+            currAnalysis << inBoxes->at(j)->getId() << ", " << "(";
+            currAnalysis << inBoxes->at(j)->getDim()->x << ", " << inBoxes->at(j)->getDim()->y << ", " << inBoxes->at(j)->getDim()->z << "), (";
+            currAnalysis << inBoxes->at(j)->getCenter()->x << ", " << inBoxes->at(j)->getCenter()->y << ", " << inBoxes->at(j)->getCenter()->z << std::endl;
+        }
+
+        std::cout << currAnalysis;
+    }
 }
 
 void testMain(){

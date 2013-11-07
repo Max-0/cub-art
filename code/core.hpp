@@ -5,6 +5,7 @@
 #include<string>
 #include<deque>
 #include<vector>
+#include<sstream>
 
 #define meters 10000     //précision au 10ème de mm
 #define m meters
@@ -38,7 +39,7 @@ float getOnAxisDst(Vect3D* pointOne, Vect3D* pointTwo, AXIS which);
 
 class Box{
     public:
-    Box(uInt P_id, Vect3D *P_dim, Vect3D *P_center, uInt P_weight);
+    Box(uInt P_id, Vect3D *P_dim=NULL, Vect3D *P_center=NULL, uInt P_weight = 0);
     virtual ~Box();
     virtual void rotate(AXIS which);
     virtual void move(Vect3D* displacement);
@@ -136,12 +137,11 @@ class SpaceToFill : public Box
     bool isStable(Box* box); // si internée directement
     bool isCompatible(ObjectBox* box);    //comparaison paramètres individuels de chaques boites
     void intern(ObjectBox* box);
-    void empty();   //destructrice
     Box* pop();   //pop sur le stack
     Box* back();
     std::deque<ObjectBox*>* getBoxStack();
     //filtres
-    uInt getDensity();
+    long long int getDensity();
     Vect3D* getLargestBoxBehind(float step);    //step : pourcentage 
                                                 //de la dimension z, z/step = nb test
     Vect3D* getCenterOfMass();
@@ -158,11 +158,6 @@ class SpaceToFill : public Box
     double precision;
 
 };
-
-
-/*
-    Début algo remplissage
-*/
 
 #endif
 
