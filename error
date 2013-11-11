@@ -1,0 +1,629 @@
+==4461== Invalid read of size 4
+==4461==    at 0x8052099: SpaceToFill::getDensity() (core.cpp:533)
+==4461==    by 0x8052830: SpaceToFill::getQuality() (core.cpp:611)
+==4461==    by 0x8049B3C: SpaceBandBTree::getQuality() (algo.cpp:129)
+==4461==    by 0x80499EE: SpaceBandBTree::prune() (algo.cpp:115)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461==    by 0x8055C32: main (main.cpp:4)
+==4461==  Address 0x4c1efa0 is 8 bytes inside a block of size 12 free'd
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050122: Box::~Box() (core.cpp:55)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461== 
+==4461== Invalid read of size 4
+==4461==    at 0x80520E2: SpaceToFill::getDensity() (core.cpp:533)
+==4461==    by 0x8052830: SpaceToFill::getQuality() (core.cpp:611)
+==4461==    by 0x8049B3C: SpaceBandBTree::getQuality() (algo.cpp:129)
+==4461==    by 0x80499EE: SpaceBandBTree::prune() (algo.cpp:115)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461==    by 0x8055C32: main (main.cpp:4)
+==4461==  Address 0x4c1ef9c is 4 bytes inside a block of size 12 free'd
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050122: Box::~Box() (core.cpp:55)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461== 
+==4461== Invalid read of size 4
+==4461==    at 0x805212B: SpaceToFill::getDensity() (core.cpp:533)
+==4461==    by 0x8052830: SpaceToFill::getQuality() (core.cpp:611)
+==4461==    by 0x8049B3C: SpaceBandBTree::getQuality() (algo.cpp:129)
+==4461==    by 0x80499EE: SpaceBandBTree::prune() (algo.cpp:115)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461==    by 0x8055C32: main (main.cpp:4)
+==4461==  Address 0x4c1ef98 is 0 bytes inside a block of size 12 free'd
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050122: Box::~Box() (core.cpp:55)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461== 
+==4461== Invalid read of size 4
+==4461==    at 0x8052191: SpaceToFill::getDensity() (core.cpp:534)
+==4461==    by 0x8052830: SpaceToFill::getQuality() (core.cpp:611)
+==4461==    by 0x8049B3C: SpaceBandBTree::getQuality() (algo.cpp:129)
+==4461==    by 0x80499EE: SpaceBandBTree::prune() (algo.cpp:115)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461==    by 0x8055C32: main (main.cpp:4)
+==4461==  Address 0x4c1efe0 is 8 bytes inside a block of size 12 free'd
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050130: Box::~Box() (core.cpp:56)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461== 
+==4461== Invalid read of size 4
+==4461==    at 0x80521B3: SpaceToFill::getDensity() (core.cpp:534)
+==4461==    by 0x8052830: SpaceToFill::getQuality() (core.cpp:611)
+==4461==    by 0x8049B3C: SpaceBandBTree::getQuality() (algo.cpp:129)
+==4461==    by 0x80499EE: SpaceBandBTree::prune() (algo.cpp:115)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461==    by 0x8055C32: main (main.cpp:4)
+==4461==  Address 0x4c1efdc is 4 bytes inside a block of size 12 free'd
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050130: Box::~Box() (core.cpp:56)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461== 
+==4461== Invalid read of size 4
+==4461==    at 0x80521D5: SpaceToFill::getDensity() (core.cpp:534)
+==4461==    by 0x8052830: SpaceToFill::getQuality() (core.cpp:611)
+==4461==    by 0x8049B3C: SpaceBandBTree::getQuality() (algo.cpp:129)
+==4461==    by 0x80499EE: SpaceBandBTree::prune() (algo.cpp:115)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461==    by 0x8055C32: main (main.cpp:4)
+==4461==  Address 0x4c1efd8 is 0 bytes inside a block of size 12 free'd
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050130: Box::~Box() (core.cpp:56)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461== 
+==4461== Invalid read of size 4
+==4461==    at 0x8052607: SpaceToFill::getCenterOfMass() (core.cpp:576)
+==4461==    by 0x805286C: SpaceToFill::getQuality() (core.cpp:615)
+==4461==    by 0x8049B3C: SpaceBandBTree::getQuality() (algo.cpp:129)
+==4461==    by 0x80499EE: SpaceBandBTree::prune() (algo.cpp:115)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461==    by 0x8055C32: main (main.cpp:4)
+==4461==  Address 0x4c1efd8 is 0 bytes inside a block of size 12 free'd
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050130: Box::~Box() (core.cpp:56)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461== 
+==4461== Invalid read of size 4
+==4461==    at 0x8052678: SpaceToFill::getCenterOfMass() (core.cpp:579)
+==4461==    by 0x805286C: SpaceToFill::getQuality() (core.cpp:615)
+==4461==    by 0x8049B3C: SpaceBandBTree::getQuality() (algo.cpp:129)
+==4461==    by 0x80499EE: SpaceBandBTree::prune() (algo.cpp:115)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461==    by 0x8055C32: main (main.cpp:4)
+==4461==  Address 0x4c1efdc is 4 bytes inside a block of size 12 free'd
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050130: Box::~Box() (core.cpp:56)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461== 
+==4461== Invalid read of size 4
+==4461==    at 0x80526E7: SpaceToFill::getCenterOfMass() (core.cpp:582)
+==4461==    by 0x805286C: SpaceToFill::getQuality() (core.cpp:615)
+==4461==    by 0x8049B3C: SpaceBandBTree::getQuality() (algo.cpp:129)
+==4461==    by 0x80499EE: SpaceBandBTree::prune() (algo.cpp:115)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461==    by 0x8055C32: main (main.cpp:4)
+==4461==  Address 0x4c1efe0 is 8 bytes inside a block of size 12 free'd
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050130: Box::~Box() (core.cpp:56)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461== 
+==4461== Invalid free() / delete / delete[] / realloc()
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050122: Box::~Box() (core.cpp:55)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461==  Address 0x4c1ef98 is 0 bytes inside a block of size 12 free'd
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050122: Box::~Box() (core.cpp:55)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461== 
+==4461== Invalid free() / delete / delete[] / realloc()
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050130: Box::~Box() (core.cpp:56)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461==  Address 0x4c1efd8 is 0 bytes inside a block of size 12 free'd
+==4461==    at 0x402AC1D: operator delete(void*) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+==4461==    by 0x8050130: Box::~Box() (core.cpp:56)
+==4461==    by 0x8050B2F: ObjectBox::~ObjectBox() (core.cpp:226)
+==4461==    by 0x8050B88: ObjectBox::~ObjectBox() (core.cpp:231)
+==4461==    by 0x8051420: SpaceToFill::~SpaceToFill() (core.cpp:404)
+==4461==    by 0x80514A8: SpaceToFill::~SpaceToFill() (core.cpp:405)
+==4461==    by 0x8048E8F: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:29)
+==4461==    by 0x8048F90: SpaceBandBTree::~SpaceBandBTree() (algo.cpp:32)
+==4461==    by 0x8049A43: SpaceBandBTree::prune() (algo.cpp:116)
+==4461==    by 0x80595D0: testPrune() (tests.cpp:268)
+==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+==4461==    by 0x8059725: testMain() (tests.cpp:284)
+==4461== 
+        Réduction : FAIL
+            -18 noeuds déffaussés
+            ==4461== 
+            ==4461== HEAP SUMMARY:
+            ==4461==     in use at exit: 15,848,364 bytes in 245,201 blocks
+            ==4461==   total heap usage: 1,609,984 allocs, 1,364,817 frees, 34,466,286 bytes allocated
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 105 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8056F05: testCollisions() (tests.cpp:83)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 106 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8056F24: testCollisions() (tests.cpp:84)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 107 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8056C86: testCollisions() (tests.cpp:69)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 108 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8057440: testValidIntern() (tests.cpp:104)
+            ==4461==    by 0x8058CE6: testCore() (tests.cpp:203)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 109 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x80574E2: testValidIntern() (tests.cpp:108)
+            ==4461==    by 0x8058CE6: testCore() (tests.cpp:203)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 110 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x8057AB2: testComplexIntern() (tests.cpp:125)
+            ==4461==    by 0x8058CEB: testCore() (tests.cpp:204)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 111 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x8057B58: testComplexIntern() (tests.cpp:130)
+            ==4461==    by 0x8058CEB: testCore() (tests.cpp:204)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 112 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x8057C2C: testComplexIntern() (tests.cpp:137)
+            ==4461==    by 0x8058CEB: testCore() (tests.cpp:204)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 113 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x8057C59: testComplexIntern() (tests.cpp:139)
+            ==4461==    by 0x8058CEB: testCore() (tests.cpp:204)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 114 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x8057C86: testComplexIntern() (tests.cpp:141)
+            ==4461==    by 0x8058CEB: testCore() (tests.cpp:204)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 115 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x8057CC5: testComplexIntern() (tests.cpp:144)
+            ==4461==    by 0x8058CEB: testCore() (tests.cpp:204)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 116 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x80582F7: testConstraints() (tests.cpp:160)
+            ==4461==    by 0x8058CF0: testCore() (tests.cpp:205)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 117 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x8058336: testConstraints() (tests.cpp:162)
+            ==4461==    by 0x8058CF0: testCore() (tests.cpp:205)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 118 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x8058363: testConstraints() (tests.cpp:163)
+            ==4461==    by 0x8058CF0: testCore() (tests.cpp:205)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 119 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x80583A2: testConstraints() (tests.cpp:165)
+            ==4461==    by 0x8058CF0: testCore() (tests.cpp:205)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 120 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x80583CF: testConstraints() (tests.cpp:166)
+            ==4461==    by 0x8058CF0: testCore() (tests.cpp:205)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 121 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x80583FC: testConstraints() (tests.cpp:167)
+            ==4461==    by 0x8058CF0: testCore() (tests.cpp:205)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 12 bytes in 1 blocks are definitely lost in loss record 122 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x804FFAB: getNewVect(long, long, long) (core.cpp:9)
+            ==4461==    by 0x8051914: SpaceToFill::isStable(Box*) (core.cpp:458)
+            ==4461==    by 0x8051726: SpaceToFill::isInternable(ObjectBox*) (core.cpp:437)
+            ==4461==    by 0x805843B: testConstraints() (tests.cpp:169)
+            ==4461==    by 0x8058CF0: testCore() (tests.cpp:205)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 44 (20 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 165 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x80571EC: testValidIntern() (tests.cpp:95)
+            ==4461==    by 0x8058CE6: testCore() (tests.cpp:203)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 44 (20 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 166 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x805607A: testCollisions() (tests.cpp:29)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 44 (20 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 167 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x80560E7: testCollisions() (tests.cpp:30)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 44 (20 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 168 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8056154: testCollisions() (tests.cpp:31)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 44 (20 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 169 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x80561C1: testCollisions() (tests.cpp:32)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 44 (20 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 170 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x805622E: testCollisions() (tests.cpp:33)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 44 (20 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 171 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x80508D6: Box::getCopy() (core.cpp:194)
+            ==4461==    by 0x80565E4: testCollisions() (tests.cpp:46)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 44 (20 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 172 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x80508D6: Box::getCopy() (core.cpp:194)
+            ==4461==    by 0x80566C7: testCollisions() (tests.cpp:48)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 44 (20 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 173 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x80508D6: Box::getCopy() (core.cpp:194)
+            ==4461==    by 0x80567AA: testCollisions() (tests.cpp:50)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 44 (20 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 174 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8056BD8: testCollisions() (tests.cpp:67)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 44 (20 direct, 24 indirect) bytes in 1 blocks are definitely lost in loss record 175 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8056C45: testCollisions() (tests.cpp:68)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 652 (84 direct, 568 indirect) bytes in 1 blocks are definitely lost in loss record 210 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8057317: testValidIntern() (tests.cpp:98)
+            ==4461==    by 0x8058CE6: testCore() (tests.cpp:203)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 652 (84 direct, 568 indirect) bytes in 1 blocks are definitely lost in loss record 211 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8056CD1: testCollisions() (tests.cpp:70)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 672 (84 direct, 588 indirect) bytes in 1 blocks are definitely lost in loss record 212 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8059481: testPrune() (tests.cpp:256)
+            ==4461==    by 0x8059713: testAlgo() (tests.cpp:279)
+            ==4461==    by 0x8059725: testMain() (tests.cpp:284)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 696 (84 direct, 612 indirect) bytes in 1 blocks are definitely lost in loss record 213 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8056658: testCollisions() (tests.cpp:47)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 696 (84 direct, 612 indirect) bytes in 1 blocks are definitely lost in loss record 214 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x805673B: testCollisions() (tests.cpp:49)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 696 (84 direct, 612 indirect) bytes in 1 blocks are definitely lost in loss record 215 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8056801: testCollisions() (tests.cpp:51)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 696 (84 direct, 612 indirect) bytes in 1 blocks are definitely lost in loss record 216 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x80568AD: testCollisions() (tests.cpp:52)
+            ==4461==    by 0x8058CE1: testCore() (tests.cpp:202)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 696 (84 direct, 612 indirect) bytes in 1 blocks are definitely lost in loss record 217 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x805778C: testComplexIntern() (tests.cpp:119)
+            ==4461==    by 0x8058CEB: testCore() (tests.cpp:204)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 696 (84 direct, 612 indirect) bytes in 1 blocks are definitely lost in loss record 218 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x80578E4: testComplexIntern() (tests.cpp:121)
+            ==4461==    by 0x8058CEB: testCore() (tests.cpp:204)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 696 (84 direct, 612 indirect) bytes in 1 blocks are definitely lost in loss record 219 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8057A3C: testComplexIntern() (tests.cpp:123)
+            ==4461==    by 0x8058CEB: testCore() (tests.cpp:204)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 696 (84 direct, 612 indirect) bytes in 1 blocks are definitely lost in loss record 220 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x805807D: testConstraints() (tests.cpp:156)
+            ==4461==    by 0x8058CF0: testCore() (tests.cpp:205)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 696 (84 direct, 612 indirect) bytes in 1 blocks are definitely lost in loss record 221 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8058129: testConstraints() (tests.cpp:157)
+            ==4461==    by 0x8058CF0: testCore() (tests.cpp:205)
+            ==4461==    by 0x8059720: testMain() (tests.cpp:283)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 696 (84 direct, 612 indirect) bytes in 1 blocks are definitely lost in loss record 222 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8058EAE: testBranch() (tests.cpp:222)
+            ==4461==    by 0x8059709: testAlgo() (tests.cpp:277)
+            ==4461==    by 0x8059725: testMain() (tests.cpp:284)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== 696 (84 direct, 612 indirect) bytes in 1 blocks are definitely lost in loss record 223 of 302
+            ==4461==    at 0x402B733: operator new(unsigned int) (in /usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
+            ==4461==    by 0x8059196: testBound() (tests.cpp:240)
+            ==4461==    by 0x805970E: testAlgo() (tests.cpp:278)
+            ==4461==    by 0x8059725: testMain() (tests.cpp:284)
+            ==4461==    by 0x8055C32: main (main.cpp:4)
+            ==4461== 
+            ==4461== LEAK SUMMARY:
+            ==4461==    definitely lost: 1,296,740 bytes in 91,895 blocks
+            ==4461==    indirectly lost: 14,551,624 bytes in 153,306 blocks
+            ==4461==      possibly lost: 0 bytes in 0 blocks
+            ==4461==    still reachable: 0 bytes in 0 blocks
+            ==4461==         suppressed: 0 bytes in 0 blocks
+            ==4461== 
+            ==4461== For counts of detected and suppressed errors, rerun with: -v
+            ==4461== ERROR SUMMARY: 579 errors from 70 contexts (suppressed: 0 from 0)
+

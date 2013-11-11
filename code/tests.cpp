@@ -311,7 +311,7 @@ void testAlgo(){
     testSpaces.push_back(new SpaceToFill(11, getNewVect(100, 100, 100), getNewVect(0, 0, 0), 450));
     testSpaces.push_back(new SpaceToFill(12, getNewVect(100, 75, 100), getNewVect(0, 0, 0), 450)); 
     //calcul
-    SemiSol result = SpaceBandB(testObjects, testSpaces);
+    SemiSol* result = SpaceBandB(testObjects, testSpaces, 2, 100, 5, new BandBCallback);
     //suppression sujets
     while( not testObjects.empty() ){
         delete testObjects.back();
@@ -323,17 +323,18 @@ void testAlgo(){
     }
     //affichage solutions
     std::cout << "     Test complet" << std::endl;
-    for(int i = 0 ; i  < result.spaces.size() ; ++i){
+    std::cout << result->spaces.size() << " spaces, " << result->objectsLefts.size() << " objects" << std::endl;
+    for(int i = 0 ; i  < result->spaces.size() ; ++i){
         std::stringstream currAnalysis;
         currAnalysis << "    Containers" << std::endl;
         currAnalysis << "        ID, Stack Size, Quality, Inside..." << std::endl;
         currAnalysis << "        ";
-        currAnalysis << result.spaces[i]->getId() << ", " ;
-        currAnalysis << result.spaces[i]->getStackLen() << "," ;
-        currAnalysis << result.spaces[i]->getQuality() << ", " << std::endl;
+        currAnalysis << result->spaces[i]->getId() << ", " ;
+        currAnalysis << result->spaces[i]->getStackLen() << "," ;
+        currAnalysis << result->spaces[i]->getQuality() << ", " << std::endl;
         currAnalysis << "            ID, Size(x, y, z), pos(x, y, z)" << std::endl;
-        std::deque<ObjectBox*> *inBoxes = result.spaces[i]->getBoxStack();
-        for(int j = 0 ; j < result.spaces[i]->getStackLen() ; j++){
+        std::deque<ObjectBox*> *inBoxes = result->spaces[i]->getBoxStack();
+        for(int j = 0 ; j < result->spaces[i]->getStackLen() ; j++){
             currAnalysis << "            ";
             currAnalysis << inBoxes->at(j)->getId() << ", " << "(";
             currAnalysis << inBoxes->at(j)->getDim()->x << ", " << inBoxes->at(j)->getDim()->y << ", " << inBoxes->at(j)->getDim()->z << "), (";
@@ -342,6 +343,11 @@ void testAlgo(){
 
         std::cout << currAnalysis;
     }
+    for(int i = 0 ; i < result->spaces.size() ; ++i)
+        delete result->spaces[i];
+    for(int i = 0 ; i < result->objectsLefts.size() ; ++i)
+        delete result->objectsLefts[i];
+    delete result;
 }
 
 void testMain(){

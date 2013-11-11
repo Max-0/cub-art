@@ -8,6 +8,8 @@ struct SemiSol{
     std::vector<ObjectBox*> objectsLefts ;
 };
 
+long long int getTreeNbOfNode(uInt m_ary, int treeDepth);       //permet d'estimer la charge de travail
+
 class SpaceBandBTree;
 
 class SpaceNodeList{
@@ -48,7 +50,12 @@ class SpaceBandBTree{
         uInt getSonsLength();
         SpaceBandBTree* getSonNb(uInt nb);       //peut renvoyer NULL
         bool getHasBranched();
+        
+        SemiSol getContent();
+
         static long int highestLowBound;
+
+
     protected:
         std::vector<SpaceToFill*> spaces;
         std::vector<ObjectBox*> objects;
@@ -60,4 +67,11 @@ class SpaceBandBTree{
         uInt maxToKeep;
 };
 
-SemiSol SpaceBandB(std::vector<ObjectBox*> objects, std::vector<SpaceToFill*> spaces);
+class BandBCallback {
+    public:
+            virtual void operator()(uInt depth, int lenPrune, uInt maxSons, uInt boxNb);
+    protected:
+            static long long int actualCount;
+};
+
+SemiSol *SpaceBandB(std::vector<ObjectBox*> objects, std::vector<SpaceToFill*> spaces, float precision, uInt maxStudy, uInt maxKeep, BandBCallback* callback);

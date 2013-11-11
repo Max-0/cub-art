@@ -2,6 +2,23 @@
 
 long int SpaceBandBTree::highestLowBound = 0;
 
+long long int getTreeNbOfNode(uInt m_ary, int treeDepth){
+    long long int ret = 0;
+    if(m_ary > 0 and treeDepth > 0){
+            if(m_ary == 1)
+                ret = treeDepth;
+            else{
+                uInt m_ary_exponented = 1;
+                for(int i = 0 ; i < treeDepth+1 ; ++i)
+                    m_ary_exponented *= m_ary;
+                ret = (m_ary_exponented - 1) / (m_ary - 1);
+            }
+    }
+    if(ret < 0)
+        ret *= -1;
+    return ret;
+}
+
 SpaceBandBTree::SpaceBandBTree(float precision, uInt P_maxToStudy, uInt P_maxToKeep){
      precisionStep = precision;
      hasBranched = false;
@@ -70,9 +87,9 @@ void SpaceBandBTree::branch(){
                     for(uInt x = 0 ; x < nbOnX and keepTrying ; ++x){  //tts pos en x
                         nextObj->move(getNewVect(0, startPos->y-nextObj->getCenter()->y, 0));
                         for(uInt y = 0 ; y < nbOnY and keepTrying ; ++y){  //tts pos en y
-                            //ceci représente un cas étudié
-                            ++comptTest;
                             if(spaces[aSpace]->isInternable(nextObj)){       //on branche
+                                //ceci représente un cas étudié
+                                ++comptTest;
                                 SpaceBandBTree* newSon = new SpaceBandBTree(precision, maxToStudy, maxToKeep);
                                 for(uInt sp = 0 ; sp < spaces.size() ; sp++){
                                     if(sp != aSpace)
@@ -101,7 +118,7 @@ void SpaceBandBTree::branch(){
         }            
     delete startPos;
     }
-    delete nextObj;
+    objects.push_back(nextObj);
 }
 
 void SpaceBandBTree::bound(){
@@ -143,6 +160,15 @@ void SpaceBandBTree::addSpace(SpaceToFill* toAdd){
 void SpaceBandBTree::addObject(ObjectBox* toAdd){
      if(toAdd != NULL)
 	objects.push_back(toAdd);
+}
+
+SemiSol SpaceBandBTree::getContent(){
+    SemiSol res;
+    for(int i = 0 ; i < spaces.size() ; ++i)
+        res.spaces.push_back(spaces[i]->getCopy());
+    for(int j = 0 ; j < objects.size() ; ++j)
+        res.objectsLefts.push_back(objects[j]->getCopy());
+    return res;
 }
 
 SpaceNodeList::SpaceNodeList(uInt maxLen){
@@ -280,9 +306,106 @@ long long int SpaceNodeList::getLowestQuality(){
     }
 }
 
-SemiSol SpaceBandB(std::vector<ObjectBox*> objects, std::vector<SpaceToFill*> spaces){
-    SemiSol ret;
-    if( not(  ret.spaces.empty() and ret.objectsLefts.empty() ) )
-        std::cout << "algo.cpp:207" << std::endl;
+long long int BandBCallback::actualCount = 0;
+
+void BandBCallback::operator()(uInt depth, int lenPrune, uInt maxSons, uInt boxNb){
+    //cas n°1 : noeud traité sans prune
+    //cas n°2 : noeud traité sans enfants (lenPrune = maxSons)
+    //cas n°3 : noeud traité avec maxSons > lenPrune > 0
+    long long int pruned = 1 + getTreeNbOfNode(maxSons, boxNb-(depth+1))*lenPrune;
+    actualCount += pruned;
+    long long int total = getTreeNbOfNode(maxSons, boxNb);
+    std::cout << "-----waiting-----" << (double) 100 -  (( (double) (total- actualCount) / (total) )*100)  << "%-------------------" << (actualCount) << " / " << total  << std::endl;
+}
+
+SemiSol *SpaceBandB(std::vector<ObjectBox*> objects, std::vector<SpaceToFill*> spaces, float precision, uInt maxStudy, uInt maxKeep, BandBCallback* callback){
+    SemiSol *ret = new SemiSol;
+    uInt nbObj = objects.size();
+    uInt nbMaxSons = maxKeep;
+    SpaceBandBTree::highestLowBound = LOWEST_BOUND;
+    //départ
+    SpaceBandBTree* root = new SpaceBandBTree(5, maxStudy, maxKeep);
+    for(int i = 0 ; i < objects.size() ; ++i )
+        root->addObject(objects[i]->getCopy());
+    for(int j = 0 ; j < spaces.size() ; ++j)
+        root->addSpace(spaces[j]->getCopy());
+    //récursivitée
+    std::vector<SpaceBandBTree*> nodeStack;
+    std::vector<SpaceBandBTree*> nodeSonsStack;
+    //garder la solution en mémoire
+    std::vector<SemiSol> sols;
+    //traitement
+    nodeStack.push_back(root);
+    int depth = 0;
+    uInt lenBefore, lenAfter;
+    
+        //
+            uInt compt = 0;
+        //
+
+    while(not nodeStack.empty()){
+        SpaceBandBTree* actNode = nodeStack.back();
+        nodeStack.pop_back();
+        compt ++;
+        // 1 branch - 2 bound - 3 prune - 4 push sur le stack
+        //1
+        actNode->branch();
+        //2
+        lenBefore = nbMaxSons;
+        actNode->bound();
+        //3
+        actNode->prune();
+        lenAfter = actNode->getSonsLength();
+        if(actNode->getSonsLength() > 0)
+            (*callback)(depth, lenBefore-lenAfter, nbMaxSons, nbObj);
+        //4
+        for(int i = 0 ; i < actNode->getSonsLength() ; ++i){
+            nodeSonsStack.push_back(actNode->getSonNb(i));
+        }
+        //si noeud sans enfants, solution possible 
+        if(actNode->getSonsLength() == 0){
+            sols.push_back(actNode->getContent());
+            (*callback)(depth, nbMaxSons, nbMaxSons, nbObj);
+        }
+        //on oublie actNode
+        actNode = NULL;
+        //si touts les noeuds du niveau ont été traités : swap avec prochain niveau
+        if(nodeStack.empty()){
+            nodeStack.swap(nodeSonsStack);
+            depth++;
+        }
+    }
+    std::cout << compt << " noeuds traités, " << getTreeNbOfNode(nbMaxSons, nbObj)-compt << " noeuds déffaussés, " << (double) (getTreeNbOfNode(nbMaxSons, nbObj)-compt) / ( (double)  getTreeNbOfNode(nbMaxSons, nbObj)/100) << " \% noeuds déffaussés " << std::endl;
+    //nettoyage
+    delete root;
+    //prendre la meilleur solution
+    std::cout << sols.size() << " solutions" << std::endl;
+    long long int bestQuality = 0;
+    uInt bestIndex = -1;
+    for(uInt i = 0 ; i < sols.size() ; ++i){
+        long long int quality = 0;
+        for(uInt j = 0 ; j < sols[i].spaces.size() ; ++j){
+            quality += sols[i].spaces[j]->getQuality();    
+        }
+        if(quality > bestQuality){
+            bestQuality = quality;
+            bestIndex = i;
+        }
+    }
+    if(bestIndex != -1){
+        for(uInt i = 0 ; i < sols[bestIndex].spaces.size() ; ++ i)
+            ret->spaces.push_back(sols[bestIndex].spaces[i]);
+        for(uInt i = 0 ; i < sols[bestIndex].objectsLefts.size() ; ++ i)
+            ret->objectsLefts.push_back(sols[bestIndex].objectsLefts[i]);
+        for(int i = 0 ; i < sols.size() ; ++i){
+            if(i != bestIndex){
+                for(uInt j = 0 ; j < sols[i].spaces.size() ; ++j)
+                    delete sols[i].spaces[j];
+                for(uInt j = 0 ; j < sols[i].objectsLefts.size() ; ++j)
+                    delete sols[i].objectsLefts[j];
+            }
+        }
+    }    
+    delete callback;
     return ret;
 }

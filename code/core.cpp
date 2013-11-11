@@ -627,7 +627,7 @@ long long int SpaceToFill::getQuality(){
         equilibrium *= -1;
     delete massCenter;
     //P_volLeft + density + behind ?> equilibrium
-    long long int retour = ( ( 5*P_volLeft + 7*density + 15.5*behind - 1.5*equilibrium ) * boxStack.size());
+    long long int retour = ( ( (double) 0.05*P_volLeft +  (double) 0.007*density + (double) 0.15*behind - (double) 0.015*equilibrium ) * boxStack.size());
     if(retour < 0)
         retour *= -1;
     return retour;
